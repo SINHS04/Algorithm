@@ -1,6 +1,6 @@
 package Algorithm.Graph;
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
 
   private int v;
   private int w;
@@ -10,8 +10,6 @@ public class Edge {
     this.w = w;
   }
 
-  public Edge() {}
-
   public int getV() {
     return v;
   }
@@ -20,11 +18,8 @@ public class Edge {
     return w;
   }
 
-  public void setV(int v) {
-    this.v = v;
-  }
-
-  public void setW(int w) {
-    this.w = w;
+  @Override
+  public int compareTo(Edge o) {
+    return this.w - o.w;
   }
 }

@@ -1,29 +1,27 @@
 package Algorithm.Graph;
 
-import Algorithm.Graph.Edge;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Prim {
 
-  static ArrayList<ArrayList<Edge>> vertex; // 연결 리스트
+  static ArrayList<Edge>[] graph; // 연결 리스트
   static int N; // 총 정점 수
   static int M; // 간선 수
-  static int[] weight; // 노드까지 가중치
+  static ArrayList<Integer> S;
 
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    vertex = new ArrayList<>();
     N = Integer.parseInt(br.readLine());
     M = Integer.parseInt(br.readLine());
-    weight = new int[N];
+    S = new ArrayList<>();
+    graph = new ArrayList[N];
 
     // 정점만큼 리스트 생성 및 각 노드에 최대값 대입
     for (int i = 0; i < N; ++i) {
-      vertex.add(new ArrayList<Edge>());
-      weight[i] = Integer.MAX_VALUE;
+      graph[i] = new ArrayList<Edge>();
     }
 
     // 각 정점과 연결된 정점을 저장해 그래프 생성
@@ -32,31 +30,34 @@ public class Prim {
       int a = Integer.parseInt(str[0]) - 1;
       int b = Integer.parseInt(str[1]) - 1;
       int c = Integer.parseInt(str[2]);
-      vertex.get(a).add(new Edge(b, c));
-      vertex.get(b).add(new Edge(a, c));
+      graph[a].add(new Edge(b, c));
+      graph[b].add(new Edge(a, c));
     }
 
     prim(0);
-
-    for (int i = 0; i < N; ++i) {
-      System.out.println(weight[i]);
-    }
   }
 
-  public static void prim(int start) {
-    weight[0] = 0;
-  }
+  public static void prim(int st) {
+    boolean[] visited = new boolean[N];
+    PriorityQueue<Edge> queue = new PriorityQueue<>();
+    queue.add(new Edge(st, 0));
+    int cnt = 0;
+    while (!queue.isEmpty()) {
+      Edge edge = queue.poll();
+      int v = edge.getV();
+      int w = edge.getW();
+      if (!visited[v]) {
+        System.out.println(v + 1);
+        visited[v] = true;
+        cnt += w;
 
-  public static Edge getMin(ArrayList<Edge> list) {
-    Edge ret = new Edge();
-    int min = Integer.MAX_VALUE;
-    for (Edge e : list) {
-      if (min > e.getW()) {
-        min = e.getW();
-        ret = e;
+        for (Edge e : graph[v]) {
+          if (!visited[e.getV()]) {
+            queue.add(e);
+          }
+        }
       }
     }
-
-    return ret;
+    System.out.println(cnt);
   }
 }
