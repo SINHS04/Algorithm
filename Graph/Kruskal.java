@@ -1,9 +1,12 @@
 package Algorithm.Graph;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
 
-public class Prim {
+public class Kruskal {
 
   static ArrayList<Edge>[] graph; // 연결 리스트
   static int N; // 총 정점 수
@@ -32,30 +35,12 @@ public class Prim {
       graph[b].add(new Edge(a, c));
     }
 
-    prim(5);
+    kruskal();
   }
 
-  public static void prim(int st) {
-    boolean[] visited = new boolean[N];
-    PriorityQueue<Edge> queue = new PriorityQueue<>();
-    queue.add(new Edge(st, 0));
+  public static void kruskal() {
     int cnt = 0;
-    while (!queue.isEmpty()) {
-      Edge edge = queue.poll();
-      int v = edge.getV();
-      int w = edge.getW();
-      if (!visited[v]) {
-        System.out.println(v + 1);
-        visited[v] = true;
-        cnt += w;
 
-        for (Edge e : graph[v]) {
-          if (!visited[e.getV()]) {
-            queue.add(e);
-          }
-        }
-      }
-    }
     System.out.println(cnt);
   }
 }
