@@ -22,4 +22,8 @@ public class Edge implements Comparable<Edge> {
   public int compareTo(Edge o) {
     return this.w - o.w;
   }
+
+  public void setW(int w) {
+    this.w = w;
+  }
 }
