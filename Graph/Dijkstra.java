@@ -52,8 +52,7 @@ public class Dijkstra {
 
         for (Edge e : graph[v]) {
           if (!visited[e.getV()] && weight[v] + e.getW() < weight[e.getV()]) {
-            e.setW(weight[v] + e.getW());
-            weight[e.getV()] = e.getW();
+            weight[e.getV()] = weight[v] + e.getW();
           }
 
           queue.add(e);
